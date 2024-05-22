@@ -1,0 +1,9 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: test-helmchart
+  namespace: test-helmchart
+spec:
+  type: oci
+  interval: 1m
+  url: oci://localhost:5000/helm-charts

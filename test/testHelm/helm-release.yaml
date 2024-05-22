@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: test-helmchart
+  namespace: test-helmchart
+spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: example
+      version: '0.8.x'
+      sourceRef:
+        kind: HelmRepository
+        name: test-helmchart
+        namespace: test-helmchart
+      reconcileStrategy: Revision
+      interval: 1m
+  targetNamespace: test-helmchart
+  valuesFrom:
+  - kind: ConfigMap
+    name: test-helmchart-values
+    valuesKey: values.yaml
