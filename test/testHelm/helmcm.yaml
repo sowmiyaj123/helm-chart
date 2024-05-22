@@ -1,7 +1,7 @@
 kind: ConfigMap
 metadata:
-  name: test-helmchart-values
-  namespace: test-helmchart
+  name: example-values
+  namespace: example
 apiVersion: v1
 data:
   values.yaml: |+
