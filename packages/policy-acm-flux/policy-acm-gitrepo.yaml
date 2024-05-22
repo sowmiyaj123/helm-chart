@@ -1,0 +1,15 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: policy-acm-gitrepo
+  namespace: acm
+spec:
+  interval: 10s
+  url: https://github.com/Nordix/nordix-nephio-packages.git
+  ref:
+    branch: master
+  ignore: |
+    # exclude all
+    /*
+    # include charts dir
+    !/charts

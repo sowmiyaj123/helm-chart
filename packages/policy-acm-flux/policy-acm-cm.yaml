@@ -1,0 +1,133 @@
+kind: ConfigMap
+metadata:
+  name: policy-acm-values
+  namespace: acm
+apiVersion: v1
+data:
+  values.yaml: |+
+    global:
+      aafEnabled: false
+      mariadb:
+        # '&mariadbConfig' means we "store" the values for  later use in the file
+        # with '*mariadbConfig' pointer.
+        config: &mariadbConfig
+          mysqlDatabase: policyadmin
+        service: &mariadbService
+          name: &mariadb-galera mariadb-galera
+          internalPort: 3306
+      prometheusEnabled: false
+      kafkaBootstrap: strimzi-kafka-bootstrap
+      policyKafkaUser: policy-kafka-user
+    
+      repository: nexus3.onap.org:10001
+      pullPolicy: IfNotPresent
+      dockerRepository: docker.io
+    
+      image:
+        readiness: onap/oom/readiness:3.0.1
+        mariadb: bitnami/mariadb-galera:10.5.8
+        api: onap/policy-api:$tag
+        pap: onap/policy-pap:$tag
+        apex: onap/policy-apex-pdp:$tag
+        simulator: onap/policy-models-simulator:2.8.2
+        pdpdcl: onap/policy-pdpd-cl:$tag
+        xacml: onap/policy-xacml-pdp:$tag
+        distribution: onap/policy-distribution:$tag
+        runtimeacm: onap/policy-clamp-runtime-acm:6.4.3
+        kserveparticipant: onap/policy-clamp-ac-kserve-ppnt:$tag
+        k8sparticipant: onap/policy-clamp-ac-k8s-ppnt:$tag
+        pfparticipant: onap/policy-clamp-ac-pf-ppnt:$tag
+        httpparticipant: onap/policy-clamp-ac-http-ppnt:$tag
+        a1pmsparticipant: onap/policy-clamp-ac-a1pms-ppnt:$tag
+    
+    policy-mariadb-galera:
+      enabled: true
+    policy-models-simulator:
+      enabled: true
+    policy-api:
+      enabled: false
+    policy-pap:
+      enabled: false
+    policy-clamp-ac-k8s-ppnt:
+      enabled: false
+    policy-clamp-runtime-acm:
+      enabled: true
+    policy-apex-pdp:
+      enabled: false
+    policy-clamp-ac-pf-ppnt:
+      enabled: false
+    policy-drools-pdp:
+      enabled: false
+    policy-xacml-pdp:
+      enabled: false
+    policy-distribution:
+      enabled: false
+    policy-clamp-ac-http-ppnt:
+      enabled: false
+    policy-clamp-ac-kserve-ppnt:
+      enabled: false
+    policy-clamp-ac-a1pms-ppnt:
+      enabled: false
+    
+    #################################################################
+    # DB configuration defaults.
+    #################################################################
+    
+    
+    mariadb:
+      image: mariadb:10.5.8
+    
+    dbmigrator:
+      image: onap/policy-db-migrator:2.6.2
+      schema: policyadmin
+      policy_home: "/opt/app/policy"
+    
+    subChartsOnly:
+      enabled: true
+    
+    # flag to enable debugging - application support required
+    debugEnabled: false
+    
+    # default number of instances
+    #replicaCount: 1
+    
+    nodeSelector: {}
+    
+    affinity: {}
+    
+    mariadb-galera:
+      # mariadb-galera.config and global.mariadb.config must be equals
+      db:
+        user: policy-user
+        # password:
+        name: &mysqlDbName policyadmin
+      nameOverride: *mariadb-galera
+      # mariadb-galera.service and global.mariadb.service must be equals
+      service: *mariadbService
+      #replicaCount: 1
+      persistence:
+        enabled: true
+        mountSubPath: policy/maria/data
+      serviceAccount:
+        nameOverride: *mariadb-galera
+    
+    # Resource Limit flavor -By Default using small
+    # Segregation for Different environment (small, large, or unlimited)
+    flavor: small
+    resources:
+      small:
+        limits:
+          cpu: 1
+          memory: 4Gi
+        requests:
+          cpu: 100m
+          memory: 1Gi
+      unlimited: {}
+    
+    #Pods Service Account
+    serviceAccount:
+      nameOverride: policy
+      roles:
+      - read
+    
+    
