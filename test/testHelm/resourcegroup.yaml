@@ -2,6 +2,6 @@ apiVersion: kpt.dev/v1alpha1
 kind: ResourceGroup
 metadata:
   name: inventory-93073698
-  namespace: test-helmchart
+  namespace: example
   labels:
     cli-utils.sigs.k8s.io/inventory-id: 56f5938bea3b09e224e117c901d16949b0f38482-1716277169505083976
