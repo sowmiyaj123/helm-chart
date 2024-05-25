@@ -1,8 +1,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: helm-charts
-  namespace: example
+  name: example
+  namespace: example-1
 spec:
   type: oci
   interval: 1m
