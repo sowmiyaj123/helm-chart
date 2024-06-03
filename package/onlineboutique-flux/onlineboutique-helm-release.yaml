@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: online-boutique
+  namespace: boutique
+spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: onlineboutique
+      version: '0.8.x'
+      sourceRef:
+        kind: HelmRepository
+        name: online-boutique
+        namespace: boutique
+      reconcileStrategy: Revision
+      interval: 1m
+  targetNamespace: boutique
+  valuesFrom:
+  - kind: ConfigMap
+    name: online-boutique-values
+    valuesKey: values.yaml

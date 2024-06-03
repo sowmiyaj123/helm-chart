@@ -1,0 +1,9 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: online-boutique
+  namespace: boutique
+spec:
+  type: oci
+  interval: 1m
+  url: oci://us-docker.pkg.dev/online-boutique-ci/charts
