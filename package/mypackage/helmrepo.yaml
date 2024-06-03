@@ -1,0 +1,9 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: helm-charts
+  namespace: mypackage
+spec:
+  type: oci
+  interval: 1m
+  url: oci://registry-1.docker.io/sowmiyajayakumar
