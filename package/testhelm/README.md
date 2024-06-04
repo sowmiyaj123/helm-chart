@@ -1,4 +1,4 @@
-# helmPackage
+# testhelm
 
 ## Description
 sample description
@@ -6,16 +6,16 @@ sample description
 ## Usage
 
 ### Fetch the package
-`kpt pkg get REPO_URI[.git]/PKG_PATH[@VERSION] helmPackage`
+`kpt pkg get REPO_URI[.git]/PKG_PATH[@VERSION] testhelm`
 Details: https://kpt.dev/reference/cli/pkg/get/
 
 ### View package content
-`kpt pkg tree helmPackage`
+`kpt pkg tree testhelm`
 Details: https://kpt.dev/reference/cli/pkg/tree/
 
 ### Apply the package
 ```
-kpt live init helmPackage
-kpt live apply helmPackage --reconcile-timeout=2m --output=table
+kpt live init testhelm
+kpt live apply testhelm --reconcile-timeout=2m --output=table
 ```
 Details: https://kpt.dev/reference/cli/live/
