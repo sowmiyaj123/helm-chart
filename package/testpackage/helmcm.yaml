@@ -5,6 +5,7 @@ metadata:
 apiVersion: v1
 data:
   values.yaml: |+
+    replicaCount: 1
     image:
       repository: sowmiyajayakumar/test
       pullPolicy: IfNotPresent
